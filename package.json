@@ -1,0 +1,16 @@
+{
+    "name": "ballpoint",
+    "author": "Matt Biggin",
+    "node": "v0.6.12",
+    "version": "0.1.1",
+    "private": true,
+    "engines": {
+        "node": "0.6.12",
+        "npm": "1.0.x"
+    },
+    "dependencies": {
+      "journey": "0.4.0-pre-3",
+      "winston": "0.6.1",
+      "optimist": "0.3.4"
+    }
+}

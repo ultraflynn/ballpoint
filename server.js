@@ -20,7 +20,7 @@ Server.prototype = {
       });
       request.addListener("end", function() {
         winston.info("[" + pathname + "] " + postData);
-        self.publish(pathname, response, postData);
+        self.publish(pathname, response, JSON.parse(postData));
       });
     }).listen(8888);
     winston.info("Server has started on port 8888");

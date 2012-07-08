@@ -1,5 +1,8 @@
-var http = require("http");
-var winston = require("winston");
+var http = require("http"); var winston = require("winston");
+var optimist = require('optimist')
+	.usage('Usage: $0 --command [command]')
+	.default('command', 'status');
+var argv = optimist.argv;
 
 var available = {
 	"add": {
@@ -20,16 +23,20 @@ var available = {
 	}
 };
 
-// TODO read the type of the required request from the command line
-var command = available["add"];
+var command = available[argv.command];
 
-var request = http.request(command.options, function(res) {
-	winston.info(res.statusCode);
-	res.setEncoding("UTF-8");
-	res.on("data", function(data) {
-		winston.info(data);
+if (command === undefined) {
+	winston.info(optimist.help());
+} else {
+	winston.info(argv.command);
+	var request = http.request(command.options, function(res) {
+		winston.info(res.statusCode);
+		res.setEncoding("UTF-8");
+		res.on("data", function(data) {
+			winston.info(data);
+		});
 	});
-});
 
-request.write(JSON.stringify(command.data));
-request.end();
+	request.write(JSON.stringify(command.data));
+	request.end();
+}
